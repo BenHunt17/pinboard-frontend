@@ -22,7 +22,6 @@ export default function NoteContent({
   const formSchema = z.object({
     content: z
       .string()
-      .min(1, f(commonMessages.error.requiredField))
       .max(999, f(commonMessages.error.maxLength, { number: 999 })),
   });
   type FormSchema = z.infer<typeof formSchema>;

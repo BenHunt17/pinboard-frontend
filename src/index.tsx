@@ -7,6 +7,8 @@ import { ThemeProvider } from "@emotion/react";
 import { theme } from "./theme";
 import { CssBaseline } from "@mui/material";
 
+//TODO - Upgrade MUI version to latest once this issue has been resolved - https://github.com/mui/base-ui/issues/167
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

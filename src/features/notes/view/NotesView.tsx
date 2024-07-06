@@ -1,40 +1,16 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import Note from "./note/Note";
+import { z } from "zod";
+import { noteSchema } from "../../../dataAccess/schemas/output/noteSchema";
 
-const notes = [
-  {
-    id: "1",
-    title: "Lorem Ipsum",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis erat erat. Suspendisse ipsum dui, fringilla eu dictum et, condimentum eget est. In sed est at sem feugiat cursus in non ipsum. Ut tristique varius felis, eu dignissim neque. Aenean in libero in est hendrerit pharetra. Mauris aliquet quis turpis ac volutpat. Etiam porta tortor eget eleifend lacinia. Quisque in justo ut ex placerat maximus. Sed efficitur, augue eget varius pretium, nibh ligula euismod est, lobortis accumsan eros nunc quis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Etiam placerat justo eget elit viverra fringilla sed at ex. Cras non leo viverra, faucibus eros nec, fringilla risus. Ut porta, eros vitae faucibus malesuada, metus arcu condimentum velit, hendrerit pretium nunc felis a nisl. Nunc sit amet nibh nisi.",
-  },
-  {
-    id: "2",
-    title: "Lorem Ipsum",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis erat erat. Suspendisse ipsum dui, fringilla eu dictum et, condimentum eget est. In sed est at sem feugiat cursus in non ipsum. Ut tristique varius felis, eu dignissim neque. Aenean in libero in est hendrerit pharetra. Mauris aliquet quis turpis ac volutpat. Etiam porta tortor eget eleifend lacinia. Quisque in justo ut ex placerat maximus. Sed efficitur, augue eget varius pretium, nibh ligula euismod est, lobortis accumsan eros nunc quis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Etiam placerat justo eget elit viverra fringilla sed at ex. Cras non leo viverra, faucibus eros nec, fringilla risus. Ut porta, eros vitae faucibus malesuada, metus arcu condimentum velit, hendrerit pretium nunc felis a nisl. Nunc sit amet nibh nisi.",
-  },
-  {
-    id: "3",
-    title: "Lorem Ipsum",
-    content:
-      "Lorem ipsum dolor sit amet, consectetu cursus in non ipsum. Ut tristique varius felis, eu dignissim neque. Aenean in libero in est hendrerit pharetra. Mauris aliquet quis turpis ac volutpat. Etiam porta tortor eget eleifend lacinia. Quisque in justo ut ex placerat maximus. Sed efficitur, augue eget varius pretium, nibh ligula euismod est, lobortis accumsan eros nunc quis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Etiam placerat justo eget elit viverra fringilla sed at ex. Cras non leo viverra, faucibus eros nec, fringilla risus. Ut porta, eros vitae faucibus malesuada, metus arcu condimentum velit, hendrerit pretium nunc felis a nisl. Nunc sit amet nibh nisi.",
-  },
-  {
-    id: "4",
-    title: "Lorem Ipsum",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis erat erat. Suspendisse ipsum dui, fringilla eu dictum et, condimentum eget est. In sed est at sem feugiat cursus in non ipsum. Ut tristique varius felis, eu dignissim neque. Aenean in libero in est hendrerit pharetra. Mauris aliquet quis turpis ac volutpat. Etiam porta tortor eget eleifend lacinia. Quisque in justo ut ex placerat maximus. Sed efficitur, augue eget varius pretium, nibh ligula euismod est, lobortis accumsan eros nunc quis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Etiam placerat justo eget elit viverra fringilla sed at ex. Cras non leo viverra, faucibus eros nec, fringilla risus. Ut porta, eros vitae faucibus malesuada, metus arcu condimentum velit, hendrerit pretium nunc felis a nisl. Nunc sit amet nibh nisi.",
-  },
-  {
-    id: "5",
-    title: "Lorem Ipsum",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis erat erat. Suspendisse ipsum dui, fringilla eu dictum et, condimentum eget est. In sed est at sem feugiat cursus in non ipsum. Ut tristique varius felis, eu dignissim neque. Aenean in libero in est hendrerit pharetra. Mauris aliquet quis turpis ac volutpat. Etiam porta tortor eget eleifend lacinia. Quisque in justo ut ex placerat maximus. Sed efficitur, augue eget varius pretium, nibh ligula euismod est, lobortis accumsan eros nunc quis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Etiam placerat justo eget elit viverra fringilla sed at ex. Cras non leo viverra, faucibus eros nec, fringilla risus. Ut porta, eros vitae faucibus malesuada, metus arcu condimentum velit, hendrerit pretium nunc felis a nisl. Nunc sit amet nibh nisi.",
-  },
-];
+interface NotesViewProps {
+  notes: z.infer<typeof noteSchema>[];
+  notesLoading: boolean;
+}
 
-export default function NotesView() {
+export default function NotesView({ notes, notesLoading }: NotesViewProps) {
+  //TODO - display something else if loading or no notes found
+
   return (
     <Grid container spacing={4}>
       {notes.map((x) => (
