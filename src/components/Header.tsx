@@ -6,7 +6,7 @@ export default function Header() {
   const { formatMessage: f } = useIntl();
 
   return (
-    <AppBar position="static" sx={{ padding: 1 }}>
+    <AppBar position="sticky" sx={{ padding: 2 }}>
       <Toolbar disableGutters>
         <Typography variant="h4" sx={{ flexGrow: 1 }}>
           Pinboard

@@ -1,3 +1,9 @@
+import NotesManagement from "../features/notes/presenter/NotesManagement";
+
 export default function NotesPage() {
-  return <div>Notes</div>;
+  return (
+    <div>
+      <NotesManagement />
+    </div>
+  );
 }
