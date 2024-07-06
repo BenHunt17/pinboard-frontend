@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import Note from "./note/Note";
 import { z } from "zod";
 import { noteSchema } from "../../../dataAccess/schemas/output/noteSchema";

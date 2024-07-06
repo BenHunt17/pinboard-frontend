@@ -4,9 +4,7 @@ interface InputErrorMessageProps {
   message: string;
 }
 
-export default function InputErrorMessage<T>({
-  message,
-}: InputErrorMessageProps) {
+export default function InputErrorMessage({ message }: InputErrorMessageProps) {
   const theme = useTheme();
 
   return (

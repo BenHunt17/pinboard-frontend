@@ -1,4 +1,3 @@
-import { useTheme } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useIntl } from "react-intl";
