@@ -1,10 +1,9 @@
 import { Grid } from "@mui/material";
+import { NoteSchema } from "../../../dataAccess/schemas/output/noteSchema";
 import Note from "./note/Note";
-import { z } from "zod";
-import { noteSchema } from "../../../dataAccess/schemas/output/noteSchema";
 
 interface NotesViewProps {
-  notes: z.infer<typeof noteSchema>[];
+  notes: NoteSchema[] | undefined;
   notesLoading: boolean;
 }
 
@@ -13,7 +12,7 @@ export default function NotesView({ notes, notesLoading }: NotesViewProps) {
 
   return (
     <Grid container spacing={4}>
-      {notes.map((x) => (
+      {notes?.map((x) => (
         <Grid key={x.id} item xs={3}>
           <Note
             title={x.title}

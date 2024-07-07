@@ -5,3 +5,5 @@ export const noteSchema = z.object({
   title: z.string().min(1),
   content: z.string(),
 });
+
+export type NoteSchema = z.infer<typeof noteSchema>;

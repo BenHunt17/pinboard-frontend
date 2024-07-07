@@ -14,6 +14,7 @@ export default function TextArea(props: TextAreaProps & TextInputProps) {
         ...props.textFieldProps,
         multiline: true,
         maxRows: props.maxRows,
+        fullWidth: true,
       }}
     />
   );

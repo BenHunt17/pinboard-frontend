@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 import { z } from "zod";
 import { commonMessages } from "../../../../common/commonMessages";
@@ -25,13 +25,11 @@ export default function NoteContent({
   });
   type FormSchema = z.infer<typeof formSchema>;
 
-  const { handleSubmit, formState, register, resetField } = useForm<FormSchema>(
-    {
-      mode: "onChange",
-      defaultValues: { content },
-      resolver: zodResolver(formSchema),
-    }
-  );
+  const { handleSubmit, formState, control, resetField } = useForm<FormSchema>({
+    mode: "onChange",
+    defaultValues: { content },
+    resolver: zodResolver(formSchema),
+  });
 
   const handleSave = (formData: FormSchema) => onContentSave(formData.content);
 
@@ -39,13 +37,21 @@ export default function NoteContent({
 
   return (
     <>
-      <TextArea
-        onSave={handleSubmit(handleSave)}
-        onClear={() => resetField("content")}
-        isDirty={isDirty}
-        isValid={isValid}
-        textFieldProps={register("content")}
-        maxRows={30}
+      {/* MUI text area seems to be unstable when it comes to multiline and resizing. 
+      React hook form controller seems to bypass this issue https://stackoverflow.com/questions/64837884/material-ui-too-many-re-renders-the-layout-is-unstable-textareaautosize-limit */}
+      <Controller
+        control={control}
+        name="content"
+        render={({ field }) => (
+          <TextArea
+            onSave={handleSubmit(handleSave)}
+            onClear={() => resetField("content")}
+            isDirty={isDirty}
+            isValid={isValid}
+            textFieldProps={{ ...field }}
+            maxRows={30}
+          />
+        )}
       />
       <ErrorMessage
         errors={errors}

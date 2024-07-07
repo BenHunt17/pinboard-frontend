@@ -6,8 +6,9 @@ import { IntlProvider } from "react-intl";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "./theme";
 import { CssBaseline } from "@mui/material";
+import { QueryClient, QueryClientProvider } from "react-query";
 
-//TODO - Upgrade MUI version to latest once this issue has been resolved - https://github.com/mui/base-ui/issues/167
+const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,10 +16,12 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <IntlProvider locale="en">
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <RouterProvider router={router} />
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </QueryClientProvider>
     </IntlProvider>
   </React.StrictMode>
 );

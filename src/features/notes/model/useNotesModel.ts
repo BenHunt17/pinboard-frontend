@@ -1,7 +1,9 @@
 import { notesService } from "../../../dataAccess/services/notesService";
 
 export default function useNotesModel() {
-  const { data: notes, loading: notesLoading } = notesService.useGetNotes();
+  const { data, status } = notesService.useGetNotes();
 
-  return { notes, notesLoading };
+  const loading = status === "loading";
+
+  return { notes: data, notesLoading: loading };
 }
