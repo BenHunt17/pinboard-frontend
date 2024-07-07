@@ -34,4 +34,17 @@ function updateContent(input: NoteUpdateContentInputSchema) {
   });
 }
 
-export const notesService = { getAll, create, updateTitle, updateContent };
+function deleteMany(input: string[]) {
+  return axios.delete(`${baseUri}/notes`, {
+    data: input,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+export const notesService = {
+  getAll,
+  create,
+  updateTitle,
+  updateContent,
+  deleteMany,
+};

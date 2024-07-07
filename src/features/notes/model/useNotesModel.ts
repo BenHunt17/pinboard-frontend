@@ -5,6 +5,7 @@ import useMutateContent from "./mutations/useMutateContent";
 import { NoteUpdateContentInputSchema } from "../../../dataAccess/schemas/input/noteUpdateContentInputSchema";
 import useMutateNotesAdd from "./mutations/useMutateNotesAdd";
 import { defineMessages, useIntl } from "react-intl";
+import useMutateNotesDelete from "./mutations/useMutateNotesDelete";
 
 export default function useNotesModel() {
   const { formatMessage: f } = useIntl();
@@ -12,6 +13,14 @@ export default function useNotesModel() {
   const { data, status } = useQueryNotes();
 
   const loading = status === "loading";
+
+  const { mutate: mutateNotesAdd } = useMutateNotesAdd();
+
+  const addNote = () =>
+    mutateNotesAdd({
+      title: f(messages.newNote, { date: new Date().toISOString() }),
+      content: "",
+    });
 
   const { mutate: mutateTitle } = useMutateTitle();
 
@@ -22,13 +31,9 @@ export default function useNotesModel() {
   const updateContent = (input: NoteUpdateContentInputSchema) =>
     mutateContent(input);
 
-  const { mutate: mutateNotesAdd } = useMutateNotesAdd();
+  const { mutate: mutateNotesDelete } = useMutateNotesDelete();
 
-  const addNote = () =>
-    mutateNotesAdd({
-      title: f(messages.newNote, { date: new Date().toISOString() }),
-      content: "",
-    });
+  const deleteNotes = (input: string[]) => mutateNotesDelete(input);
 
   return {
     notes: data,
@@ -36,6 +41,7 @@ export default function useNotesModel() {
     addNote,
     updateTitle,
     updateContent,
+    deleteNotes,
   };
 }
 
