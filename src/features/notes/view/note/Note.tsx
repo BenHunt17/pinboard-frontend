@@ -2,20 +2,15 @@ import styled from "@emotion/styled";
 import { Box, Stack, useTheme } from "@mui/material";
 import NoteContent from "./NoteContent";
 import NoteTitle from "./NoteTitle";
+import { NoteSchema } from "../../../../dataAccess/schemas/output/noteSchema";
 
 interface NoteProps {
-  title: string;
-  content: string;
-  onTitleSave: (content: string) => void;
-  onContentSave: (content: string) => void;
+  note: NoteSchema;
+  onTitleSave: (id: string, title: string) => void;
+  onContentSave: (id: string, content: string) => void;
 }
 
-export default function Note({
-  title,
-  content,
-  onTitleSave,
-  onContentSave,
-}: NoteProps) {
+export default function Note({ note, onTitleSave, onContentSave }: NoteProps) {
   const theme = useTheme();
 
   return (
@@ -27,11 +22,19 @@ export default function Note({
       gap={2}
     >
       <Pin
-        bgcolor={pinColours[Math.floor(Math.random() * pinColours.length)]}
+        bgcolor={pinColours[Math.floor(Math.random() * pinColours.length)]} //TODO - Make these deterministic. I forgot that react rerenders which was amateurish of me
       />
       <Stack width="100%" gap={1}>
-        <NoteTitle title={title} onTitleSave={onTitleSave} />
-        <NoteContent content={content} onContentSave={onContentSave} />
+        <NoteTitle
+          key={`${note.id}${note.title}`}
+          title={note.title}
+          onTitleSave={(title) => onTitleSave(note.id, title)}
+        />
+        <NoteContent
+          key={`${note.id}${note.content}`}
+          content={note.content}
+          onContentSave={(content) => onContentSave(note.id, content)}
+        />
       </Stack>
     </Stack>
   );

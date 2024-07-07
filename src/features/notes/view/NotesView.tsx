@@ -5,9 +5,16 @@ import Note from "./note/Note";
 interface NotesViewProps {
   notes: NoteSchema[] | undefined;
   notesLoading: boolean;
+  onTitleSave: (id: string, title: string) => void;
+  onContentSave: (id: string, content: string) => void;
 }
 
-export default function NotesView({ notes, notesLoading }: NotesViewProps) {
+export default function NotesView({
+  notes,
+  notesLoading,
+  onTitleSave,
+  onContentSave,
+}: NotesViewProps) {
   //TODO - display something else if loading or no notes found
 
   return (
@@ -15,10 +22,9 @@ export default function NotesView({ notes, notesLoading }: NotesViewProps) {
       {notes?.map((x) => (
         <Grid key={x.id} item xs={3}>
           <Note
-            title={x.title}
-            content={x.content}
-            onTitleSave={() => {}}
-            onContentSave={() => {}}
+            note={x}
+            onTitleSave={onTitleSave}
+            onContentSave={onContentSave}
           />
         </Grid>
       ))}
