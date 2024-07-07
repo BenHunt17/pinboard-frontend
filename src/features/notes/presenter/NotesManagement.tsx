@@ -2,7 +2,8 @@ import useNotesModel from "../model/useNotesModel";
 import NotesView from "../view/NotesView";
 
 export default function NotesManagement() {
-  const { notes, notesLoading, updateTitle, updateContent } = useNotesModel();
+  const { notes, notesLoading, addNote, updateTitle, updateContent } =
+    useNotesModel();
 
   //TODO use a provider for the view?
 
@@ -10,6 +11,7 @@ export default function NotesManagement() {
     <NotesView
       notes={notes}
       notesLoading={notesLoading}
+      onAddNote={addNote}
       onTitleSave={(id, title) => updateTitle({ id, title })}
       onContentSave={(id, content) => updateContent({ id, content })}
     />

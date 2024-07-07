@@ -3,6 +3,7 @@ import { NoteSchema, noteSchema } from "../schemas/output/noteSchema";
 import { z } from "zod";
 import { NoteUpdateTitleInputSchema } from "../schemas/input/noteUpdateTitleInputSchema";
 import { NoteUpdateContentInputSchema } from "../schemas/input/noteUpdateContentInputSchema";
+import { NoteCreateInputSchema } from "../schemas/input/noteCreateInputSchema";
 
 const baseUri = process.env.REACT_APP_API_BASE_URI || "";
 
@@ -11,6 +12,14 @@ function getAll() {
     z.array(noteSchema).parse(result.data);
     return result.data;
   });
+}
+
+function create(input: NoteCreateInputSchema) {
+  return axios
+    .post(`${baseUri}/notes`, input, {
+      headers: { "Content-Type": "application/json" },
+    })
+    .then((result) => noteSchema.parse(result.data));
 }
 
 function updateTitle(input: NoteUpdateTitleInputSchema) {
@@ -25,4 +34,4 @@ function updateContent(input: NoteUpdateContentInputSchema) {
   });
 }
 
-export const notesService = { getAll, updateTitle, updateContent };
+export const notesService = { getAll, create, updateTitle, updateContent };
