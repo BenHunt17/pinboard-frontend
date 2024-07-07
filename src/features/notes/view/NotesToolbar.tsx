@@ -6,6 +6,7 @@ import {
   Stack,
   TextField,
   Toolbar,
+  Typography,
   useTheme,
 } from "@mui/material";
 import { defineMessages, useIntl } from "react-intl";
@@ -54,7 +55,7 @@ export default function NotesToolbar({
           placeholder={f(messages.searchPlaceholder)}
         />
       ) : (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box display="flex" alignItems="center" sx={{ flexGrow: 1 }}>
           <Checkbox
             checked={allNotesSelected}
             onChange={() => {
@@ -65,7 +66,9 @@ export default function NotesToolbar({
               }
             }}
           />
-          {f(messages.notesSelected, { count: selectedNoteIds.length })}
+          <Typography variant="body1">
+            {f(messages.notesSelected, { count: selectedNoteIds.length })}
+          </Typography>
         </Box>
       )}
       <Stack direction="row" gap={1}>
