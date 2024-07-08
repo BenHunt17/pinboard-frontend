@@ -8,7 +8,7 @@ export default function NotesView() {
   const [editMode, setEditMode] = useState(false);
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
 
-  const { notes, notesLoading, onDeleteNotes } = useNotesViewContext();
+  const { notes, onDeleteNotes } = useNotesViewContext();
 
   //TODO - display something else if loading or no notes found
 
