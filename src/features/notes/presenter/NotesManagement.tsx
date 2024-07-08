@@ -1,5 +1,6 @@
 import useNotesModel from "../model/useNotesModel";
 import NotesView from "../view/NotesView";
+import { NotesViewContext } from "../view/NotesViewContext";
 
 export default function NotesManagement() {
   const {
@@ -11,16 +12,18 @@ export default function NotesManagement() {
     deleteNotes,
   } = useNotesModel();
 
-  //TODO use a provider for the view?
-
   return (
-    <NotesView
-      notes={notes}
-      notesLoading={notesLoading}
-      onAddNote={addNote}
-      onTitleSave={(id, title) => updateTitle({ id, title })}
-      onContentSave={(id, content) => updateContent({ id, content })}
-      onDeleteNotes={deleteNotes}
-    />
+    <NotesViewContext.Provider
+      value={{
+        notes,
+        notesLoading,
+        onAddNote: addNote,
+        onTitleSave: (id, title) => updateTitle({ id, title }),
+        onContentSave: (id, content) => updateContent({ id, content }),
+        onDeleteNotes: deleteNotes,
+      }}
+    >
+      <NotesView />
+    </NotesViewContext.Provider>
   );
 }

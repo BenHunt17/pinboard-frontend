@@ -12,31 +12,29 @@ import {
 import { defineMessages, useIntl } from "react-intl";
 import ModeEdit from "@mui/icons-material/ModeEdit";
 import CloseIcon from "@mui/icons-material/Close";
-import { NoteSchema } from "../../../dataAccess/schemas/output/noteSchema";
+import { useNotesViewContext } from "./NotesViewContext";
 
 interface NotesToolbarProps {
-  notes: NoteSchema[];
-  onAddNote: () => void;
-  onDeleteNotes: () => void;
   editMode: boolean;
   setEditMode: (value: boolean) => void;
   selectedNoteIds: string[];
   setSelectedNoteIds: (value: string[]) => void;
+  onDeleteClick: () => void;
 }
 
 export default function NotesToolbar({
-  notes,
-  onAddNote,
-  onDeleteNotes,
   editMode,
   setEditMode,
   selectedNoteIds,
   setSelectedNoteIds,
+  onDeleteClick,
 }: NotesToolbarProps) {
   const { formatMessage: f } = useIntl();
   const theme = useTheme();
 
-  const allNotesSelected = notes.every((x) => selectedNoteIds.includes(x.id));
+  const { notes, onAddNote } = useNotesViewContext();
+
+  const allNotesSelected = notes?.every((x) => selectedNoteIds.includes(x.id));
 
   const handleExitEditMode = () => {
     setSelectedNoteIds([]);
@@ -62,7 +60,7 @@ export default function NotesToolbar({
               if (allNotesSelected) {
                 setSelectedNoteIds([]);
               } else {
-                setSelectedNoteIds(notes.map((x) => x.id));
+                setSelectedNoteIds(notes?.map((x) => x.id) ?? []);
               }
             }}
           />
@@ -83,7 +81,7 @@ export default function NotesToolbar({
         ) : (
           <Button
             onClick={() => {
-              onDeleteNotes();
+              onDeleteClick();
               handleExitEditMode();
             }}
             variant="contained"

@@ -1,37 +1,21 @@
 import { Grid, Stack } from "@mui/material";
-import { NoteSchema } from "../../../dataAccess/schemas/output/noteSchema";
 import Note from "./note/Note";
 import NotesToolbar from "./NotesToolbar";
 import { useState } from "react";
+import { useNotesViewContext } from "./NotesViewContext";
 
-interface NotesViewProps {
-  notes: NoteSchema[] | undefined;
-  notesLoading: boolean;
-  onAddNote: () => void;
-  onDeleteNotes: (ids: string[]) => void;
-  onTitleSave: (id: string, title: string) => void;
-  onContentSave: (id: string, content: string) => void;
-}
-
-export default function NotesView({
-  notes,
-  notesLoading,
-  onAddNote,
-  onDeleteNotes,
-  onTitleSave,
-  onContentSave,
-}: NotesViewProps) {
+export default function NotesView() {
   const [editMode, setEditMode] = useState(false);
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
+
+  const { notes, notesLoading, onDeleteNotes } = useNotesViewContext();
 
   //TODO - display something else if loading or no notes found
 
   return (
     <Stack gap={2}>
       <NotesToolbar
-        notes={notes ?? []}
-        onAddNote={onAddNote}
-        onDeleteNotes={() => onDeleteNotes(selectedNoteIds)}
+        onDeleteClick={() => onDeleteNotes(selectedNoteIds)}
         editMode={editMode}
         setEditMode={setEditMode}
         selectedNoteIds={selectedNoteIds}
@@ -42,8 +26,6 @@ export default function NotesView({
           <Grid key={x.id} item xs={3}>
             <Note
               note={x}
-              onTitleSave={onTitleSave}
-              onContentSave={onContentSave}
               editMode={editMode}
               selectedNoteIds={selectedNoteIds}
               setSelectedNoteIds={setSelectedNoteIds}

@@ -1,55 +1,22 @@
-import { NoteUpdateTitleInputSchema } from "../../../dataAccess/schemas/input/noteUpdateTitleInputSchema";
-import useQueryNotes from "./queries/useQueryNotes";
-import useMutateTitle from "./mutations/useMutateTitle";
-import useMutateContent from "./mutations/useMutateContent";
-import { NoteUpdateContentInputSchema } from "../../../dataAccess/schemas/input/noteUpdateContentInputSchema";
-import useMutateNotesAdd from "./mutations/useMutateNotesAdd";
-import { defineMessages, useIntl } from "react-intl";
-import useMutateNotesDelete from "./mutations/useMutateNotesDelete";
+import { notesUseCases } from "./notesUseCases";
 
 export default function useNotesModel() {
-  const { formatMessage: f } = useIntl();
+  const { data: notes, loading: notesLoading } = notesUseCases.useSearchNotes();
 
-  const { data, status } = useQueryNotes();
+  const addNote = notesUseCases.useAddNote();
 
-  const loading = status === "loading";
+  const updateTitle = notesUseCases.useUpdateTitle();
 
-  const { mutate: mutateNotesAdd } = useMutateNotesAdd();
+  const updateContent = notesUseCases.useUpdateContent();
 
-  const addNote = () =>
-    mutateNotesAdd({
-      title: f(messages.newNote, { date: new Date().toISOString() }),
-      content: "",
-    });
-
-  const { mutate: mutateTitle } = useMutateTitle();
-
-  const updateTitle = (input: NoteUpdateTitleInputSchema) => mutateTitle(input);
-
-  const { mutate: mutateContent } = useMutateContent();
-
-  const updateContent = (input: NoteUpdateContentInputSchema) =>
-    mutateContent(input);
-
-  const { mutate: mutateNotesDelete } = useMutateNotesDelete();
-
-  const deleteNotes = (input: string[]) => mutateNotesDelete(input);
+  const deleteNotes = notesUseCases.useDeleteNotes();
 
   return {
-    notes: data,
-    notesLoading: loading,
+    notes,
+    notesLoading,
     addNote,
     updateTitle,
     updateContent,
     deleteNotes,
   };
 }
-
-const messages = defineMessages({
-  newNote: {
-    id: "notes-model.new-note",
-    defaultMessage: "New note {date}",
-    description:
-      "The default title for a newly added note. Uses the date to ensure uniqueness",
-  },
-});

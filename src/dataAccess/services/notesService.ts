@@ -5,6 +5,14 @@ import { NoteUpdateTitleInputSchema } from "../schemas/input/noteUpdateTitleInpu
 import { NoteUpdateContentInputSchema } from "../schemas/input/noteUpdateContentInputSchema";
 import { NoteCreateInputSchema } from "../schemas/input/noteCreateInputSchema";
 
+export const notesService = {
+  getAll,
+  create,
+  updateTitle,
+  updateContent,
+  deleteMany,
+};
+
 const baseUri = process.env.REACT_APP_API_BASE_URI || "";
 
 function getAll() {
@@ -40,11 +48,3 @@ function deleteMany(input: string[]) {
     headers: { "Content-Type": "application/json" },
   });
 }
-
-export const notesService = {
-  getAll,
-  create,
-  updateTitle,
-  updateContent,
-  deleteMany,
-};

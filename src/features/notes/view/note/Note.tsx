@@ -3,11 +3,10 @@ import { Box, Checkbox, Stack, useTheme } from "@mui/material";
 import NoteContent from "./NoteContent";
 import NoteTitle from "./NoteTitle";
 import { NoteSchema } from "../../../../dataAccess/schemas/output/noteSchema";
+import { useNotesViewContext } from "../NotesViewContext";
 
 interface NoteProps {
   note: NoteSchema;
-  onTitleSave: (id: string, title: string) => void;
-  onContentSave: (id: string, content: string) => void;
   editMode: boolean;
   selectedNoteIds: string[];
   setSelectedNoteIds: (value: string[]) => void;
@@ -15,13 +14,13 @@ interface NoteProps {
 
 export default function Note({
   note,
-  onTitleSave,
-  onContentSave,
   editMode,
   selectedNoteIds,
   setSelectedNoteIds,
 }: NoteProps) {
   const theme = useTheme();
+
+  const { onTitleSave, onContentSave } = useNotesViewContext();
 
   const isChecked = selectedNoteIds.includes(note.id);
 
