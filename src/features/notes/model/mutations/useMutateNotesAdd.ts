@@ -9,10 +9,10 @@ export default function useMutateNotesAdd() {
   const result = useMutation({
     mutationFn: notesService.create,
     onSuccess: (result) => {
-      const current: NoteSchema[] | undefined = queryClient.getQueryData([
-        "notes",
+      queryClient.setQueriesData<NoteSchema[]>(["notes"], (data) => [
+        result,
+        ...(data ?? []),
       ]);
-      queryClient.setQueryData(["notes"], [result, ...(current ?? [])]);
     },
     onError: (e) => {
       //TODo abstract?

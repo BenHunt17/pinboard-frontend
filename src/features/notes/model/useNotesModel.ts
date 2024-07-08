@@ -1,7 +1,11 @@
 import { notesUseCases } from "./notesUseCases";
 
 export default function useNotesModel() {
-  const { data: notes, loading: notesLoading } = notesUseCases.useSearchNotes();
+  const {
+    data: notes,
+    loading: notesLoading,
+    setSearchText: onSearchTextChange,
+  } = notesUseCases.useSearchNotes();
 
   const addNote = notesUseCases.useAddNote();
 
@@ -14,6 +18,7 @@ export default function useNotesModel() {
   return {
     notes,
     notesLoading,
+    onSearchTextChange,
     addNote,
     updateTitle,
     updateContent,

@@ -4,6 +4,7 @@ import { NoteSchema } from "../../../dataAccess/schemas/output/noteSchema";
 interface NotesViewContextType {
   notes: NoteSchema[] | undefined;
   notesLoading: boolean;
+  onSearchTextChange: (text: string) => void;
   onAddNote: () => void;
   onTitleSave: (id: string, title: string) => void;
   onContentSave: (id: string, content: string) => void;
@@ -13,6 +14,7 @@ interface NotesViewContextType {
 const NotesViewContext = createContext<NotesViewContextType>({
   notes: [],
   notesLoading: false,
+  onSearchTextChange: () => {},
   onAddNote: () => {},
   onTitleSave: () => {},
   onContentSave: () => {},

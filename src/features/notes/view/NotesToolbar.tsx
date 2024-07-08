@@ -32,7 +32,7 @@ export default function NotesToolbar({
   const { formatMessage: f } = useIntl();
   const theme = useTheme();
 
-  const { notes, onAddNote } = useNotesViewContext();
+  const { notes, onAddNote, onSearchTextChange } = useNotesViewContext();
 
   const allNotesSelected = notes?.every((x) => selectedNoteIds.includes(x.id));
 
@@ -51,6 +51,7 @@ export default function NotesToolbar({
             marginRight: 12,
           }}
           placeholder={f(messages.searchPlaceholder)}
+          onChange={(e) => onSearchTextChange(e.currentTarget.value)}
         />
       ) : (
         <Box display="flex" alignItems="center" sx={{ flexGrow: 1 }}>

@@ -6,6 +6,7 @@ export default function NotesManagement() {
   const {
     notes,
     notesLoading,
+    onSearchTextChange,
     addNote,
     updateTitle,
     updateContent,
@@ -17,6 +18,7 @@ export default function NotesManagement() {
       value={{
         notes,
         notesLoading,
+        onSearchTextChange,
         onAddNote: addNote,
         onTitleSave: (id, title) => updateTitle({ id, title }),
         onContentSave: (id, content) => updateContent({ id, content }),

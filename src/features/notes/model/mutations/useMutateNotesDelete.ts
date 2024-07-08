@@ -9,12 +9,9 @@ export default function useMutateNotesDelete() {
   const result = useMutation({
     mutationFn: notesService.deleteMany,
     onSuccess: (_, variables) => {
-      const current: NoteSchema[] | undefined = queryClient.getQueryData([
-        "notes",
-      ]);
-      queryClient.setQueryData(
+      queryClient.setQueriesData<NoteSchema[]>(
         ["notes"],
-        current?.filter((x) => !variables.includes(x.id))
+        (data) => data?.filter((x) => !variables.includes(x.id)) ?? []
       );
     },
     onError: (e) => {

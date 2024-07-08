@@ -4,9 +4,10 @@ import { z } from "zod";
 import { NoteUpdateTitleInputSchema } from "../schemas/input/noteUpdateTitleInputSchema";
 import { NoteUpdateContentInputSchema } from "../schemas/input/noteUpdateContentInputSchema";
 import { NoteCreateInputSchema } from "../schemas/input/noteCreateInputSchema";
+import { NoteSearchInputSchema } from "../schemas/input/noteSearchInputSchema";
 
 export const notesService = {
-  getAll,
+  search,
   create,
   updateTitle,
   updateContent,
@@ -15,11 +16,13 @@ export const notesService = {
 
 const baseUri = process.env.REACT_APP_API_BASE_URI || "";
 
-function getAll() {
-  return axios.get(`${baseUri}/notes`).then<NoteSchema[]>((result) => {
-    z.array(noteSchema).parse(result.data);
-    return result.data;
-  });
+function search(input: NoteSearchInputSchema) {
+  return axios
+    .post(`${baseUri}/notes/search`, input)
+    .then<NoteSchema[]>((result) => {
+      z.array(noteSchema).parse(result.data);
+      return result.data;
+    });
 }
 
 function create(input: NoteCreateInputSchema) {

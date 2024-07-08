@@ -6,6 +6,8 @@ import useMutateTitle from "./mutations/useMutateTitle";
 import { NoteUpdateContentInputSchema } from "../../../dataAccess/schemas/input/noteUpdateContentInputSchema";
 import useMutateContent from "./mutations/useMutateContent";
 import useMutateNotesDelete from "./mutations/useMutateNotesDelete";
+import { useDebounce } from "use-debounce";
+import { useState } from "react";
 
 export const notesUseCases = {
   useSearchNotes,
@@ -16,11 +18,16 @@ export const notesUseCases = {
 };
 
 function useSearchNotes() {
-  const { data, status } = useQueryNotes();
+  const [searchText, setSearchText] = useState("");
+  const [searchTerm] = useDebounce(searchText, 300);
+
+  const input = { searchTerm: searchTerm };
+
+  const { data, status } = useQueryNotes(input);
 
   const loading = status === "loading";
 
-  return { data, loading };
+  return { data, loading, setSearchText };
 }
 
 function useAddNote() {
