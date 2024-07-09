@@ -1,10 +1,13 @@
 import axios from "axios";
-import { NoteSchema, noteSchema } from "../schemas/output/noteSchema";
-import { z } from "zod";
+import { noteSchema } from "../schemas/output/noteSchema";
 import { NoteUpdateTitleInputSchema } from "../schemas/input/noteUpdateTitleInputSchema";
 import { NoteUpdateContentInputSchema } from "../schemas/input/noteUpdateContentInputSchema";
 import { NoteCreateInputSchema } from "../schemas/input/noteCreateInputSchema";
 import { NoteSearchInputSchema } from "../schemas/input/noteSearchInputSchema";
+import {
+  paginatedNotesSchema,
+  PaginatedNotesSchema,
+} from "../schemas/output/paginatedNotesSchema";
 
 export const notesService = {
   search,
@@ -16,11 +19,11 @@ export const notesService = {
 
 const baseUri = process.env.REACT_APP_API_BASE_URI || "";
 
-function search(input: NoteSearchInputSchema) {
+function search(input: NoteSearchInputSchema, cursor: string, limit: number) {
   return axios
-    .post(`${baseUri}/notes/search`, input)
-    .then<NoteSchema[]>((result) => {
-      z.array(noteSchema).parse(result.data);
+    .post(`${baseUri}/notes/search`, { ...input, cursor, limit })
+    .then<PaginatedNotesSchema>((result) => {
+      paginatedNotesSchema.parse(result.data);
       return result.data;
     });
 }

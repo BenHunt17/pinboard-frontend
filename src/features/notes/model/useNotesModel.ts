@@ -2,7 +2,9 @@ import { notesUseCases } from "./notesUseCases";
 
 export default function useNotesModel() {
   const {
-    data: notes,
+    notes,
+    canLoadMore,
+    fetchNextPage,
     loading: notesLoading,
     setSearchText: onSearchTextChange,
   } = notesUseCases.useSearchNotes();
@@ -18,6 +20,8 @@ export default function useNotesModel() {
   return {
     notes,
     notesLoading,
+    canLoadMore,
+    fetchNextPage,
     onSearchTextChange,
     addNote,
     updateTitle,

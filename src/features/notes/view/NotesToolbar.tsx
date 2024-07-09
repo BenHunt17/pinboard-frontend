@@ -42,7 +42,7 @@ export default function NotesToolbar({
   };
 
   return (
-    <Toolbar disableGutters>
+    <Toolbar disableGutters sx={{ width: "100%" }}>
       {!editMode ? (
         <TextField
           sx={{

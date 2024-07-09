@@ -1,7 +1,7 @@
-import { useMutation, useQueryClient } from "react-query";
-import { NoteSchema } from "../../../../dataAccess/schemas/output/noteSchema";
+import { InfiniteData, useMutation, useQueryClient } from "react-query";
 import { notesService } from "../../../../dataAccess/services/notesService";
 import { ZodError } from "zod";
+import { PaginatedNotesSchema } from "../../../../dataAccess/schemas/output/paginatedNotesSchema";
 
 export default function useMutateNotesDelete() {
   const queryClient = useQueryClient();
@@ -9,10 +9,16 @@ export default function useMutateNotesDelete() {
   const result = useMutation({
     mutationFn: notesService.deleteMany,
     onSuccess: (_, variables) => {
-      queryClient.setQueriesData<NoteSchema[]>(
-        ["notes"],
-        (data) => data?.filter((x) => !variables.includes(x.id)) ?? []
-      );
+      const current = queryClient.getQueryData<
+        InfiniteData<PaginatedNotesSchema>
+      >(["notes"]);
+      queryClient.setQueryData(["notes"], {
+        pageParams: current?.pageParams,
+        pages: current?.pages.map((x, index) => ({
+          items: x.items.filter((xx) => !variables.includes(xx.id)),
+          nextCursor: x.nextCursor,
+        })),
+      });
     },
     onError: (e) => {
       //TODo abstract?

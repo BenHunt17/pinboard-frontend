@@ -15,4 +15,11 @@ const error = defineMessages({
   },
 });
 
-export const commonMessages = { error };
+const buttons = defineMessages({
+  loadMore: {
+    id: "common.buttons.load-more",
+    defaultMessage: "Load more",
+  },
+});
+
+export const commonMessages = { error, buttons };

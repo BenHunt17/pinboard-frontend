@@ -6,11 +6,13 @@ export default function NotesManagement() {
   const {
     notes,
     notesLoading,
+    canLoadMore,
     onSearchTextChange,
     addNote,
     updateTitle,
     updateContent,
     deleteNotes,
+    fetchNextPage,
   } = useNotesModel();
 
   return (
@@ -18,11 +20,13 @@ export default function NotesManagement() {
       value={{
         notes,
         notesLoading,
+        canLoadMore,
         onSearchTextChange,
         onAddNote: addNote,
         onTitleSave: (id, title) => updateTitle({ id, title }),
         onContentSave: (id, content) => updateContent({ id, content }),
         onDeleteNotes: deleteNotes,
+        loadMore: fetchNextPage,
       }}
     >
       <NotesView />

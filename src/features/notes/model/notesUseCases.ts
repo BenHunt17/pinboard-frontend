@@ -23,11 +23,15 @@ function useSearchNotes() {
 
   const input = { searchTerm: searchTerm };
 
-  const { data, status } = useQueryNotes(input);
+  const { data, status, fetchNextPage, isFetching } = useQueryNotes(input);
+
+  const notes = data?.pages.flatMap((x) => x.items);
+  const canLoadMore =
+    !isFetching && data?.pages[data.pages.length - 1].nextCursor !== null;
 
   const loading = status === "loading";
 
-  return { data, loading, setSearchText };
+  return { notes, canLoadMore, loading, setSearchText, fetchNextPage };
 }
 
 function useAddNote() {
