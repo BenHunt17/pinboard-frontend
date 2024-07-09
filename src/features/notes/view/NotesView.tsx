@@ -26,13 +26,14 @@ export default function NotesView() {
         setSelectedNoteIds={setSelectedNoteIds}
       />
       <Grid container spacing={4}>
-        {notes?.map((x) => (
+        {notes?.map((x, index) => (
           <Grid key={x.id} item xs={3}>
             <Note
               note={x}
               editMode={editMode}
               selectedNoteIds={selectedNoteIds}
               setSelectedNoteIds={setSelectedNoteIds}
+              noteIndex={index}
             />
           </Grid>
         ))}

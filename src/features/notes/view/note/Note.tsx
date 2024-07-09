@@ -10,6 +10,7 @@ interface NoteProps {
   editMode: boolean;
   selectedNoteIds: string[];
   setSelectedNoteIds: (value: string[]) => void;
+  noteIndex: number;
 }
 
 export default function Note({
@@ -17,6 +18,7 @@ export default function Note({
   editMode,
   selectedNoteIds,
   setSelectedNoteIds,
+  noteIndex,
 }: NoteProps) {
   const theme = useTheme();
 
@@ -51,9 +53,7 @@ export default function Note({
           disabled={!editMode}
           sx={{ opacity: editMode ? 1 : 0 }}
         />
-        <Pin
-          bgcolor={pinColours[Math.floor(Math.random() * pinColours.length)]} //TODO - Make these deterministic. I forgot that react rerenders which was amateurish of me
-        />
+        <Pin bgcolor={pinColours[noteIndex % pinColours.length]} />
         {/* //Added a dummy checkbox to fix alignment. Works better than messing around with absolute positioning */}
         <Checkbox disabled sx={{ opacity: 0 }} />{" "}
       </Stack>
