@@ -1,10 +1,11 @@
 import { useMutation, useQueryClient } from "react-query";
 import { NoteSchema } from "../../../../dataAccess/schemas/output/noteSchema";
 import { notesService } from "../../../../dataAccess/services/notesService";
-import { ZodError } from "zod";
+import useHandleDataAccessError from "../../../../dataAccess/common/useHandleDataAccessError";
 
 export default function useMutateContent() {
   const queryClient = useQueryClient();
+  const handleDataAccessError = useHandleDataAccessError();
 
   const result = useMutation({
     mutationFn: notesService.updateContent,
@@ -19,16 +20,7 @@ export default function useMutateContent() {
         )
       );
     },
-    onError: (e) => {
-      //TODo abstract?
-      if (e instanceof ZodError) {
-        //Toast error
-      } else if (e instanceof Error) {
-        //Toast stringified error
-      } else {
-        //Toast stringified error
-      }
-    },
+    onError: handleDataAccessError,
   });
 
   return result;

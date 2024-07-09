@@ -22,4 +22,23 @@ const buttons = defineMessages({
   },
 });
 
-export const commonMessages = { error, buttons };
+const toasts = defineMessages({
+  invalidResponse: {
+    id: "common.toasts.invalid-response",
+    defaultMessage: "Invalid response from server",
+  },
+  added: {
+    id: "common.toasts.added",
+    defaultMessage: "Added",
+  },
+  updated: {
+    id: "common.toasts.updated",
+    defaultMessage: "Updated",
+  },
+  deleted: {
+    id: "common.toasts.deleted",
+    defaultMessage: "Deleted",
+  },
+});
+
+export const commonMessages = { error, buttons, toasts };

@@ -1,10 +1,11 @@
 import { InfiniteData, useMutation, useQueryClient } from "react-query";
 import { notesService } from "../../../../dataAccess/services/notesService";
-import { ZodError } from "zod";
 import { PaginatedNotesSchema } from "../../../../dataAccess/schemas/output/paginatedNotesSchema";
+import useHandleDataAccessError from "../../../../dataAccess/common/useHandleDataAccessError";
 
 export default function useMutateNotesDelete() {
   const queryClient = useQueryClient();
+  const handleDataAccessError = useHandleDataAccessError();
 
   const result = useMutation({
     mutationFn: notesService.deleteMany,
@@ -20,16 +21,7 @@ export default function useMutateNotesDelete() {
         })),
       });
     },
-    onError: (e) => {
-      //TODo abstract?
-      if (e instanceof ZodError) {
-        //Toast error
-      } else if (e instanceof Error) {
-        //Toast stringified error
-      } else {
-        //Toast stringified error
-      }
-    },
+    onError: handleDataAccessError,
   });
 
   return result;

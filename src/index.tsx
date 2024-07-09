@@ -5,8 +5,9 @@ import { router } from "./routes";
 import { IntlProvider } from "react-intl";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "./theme";
-import { CssBaseline } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "react-query";
+import SnackbarProvider from "./SnackbarProvider";
+import { CssBaseline } from "@mui/material";
 
 const queryClient = new QueryClient();
 
@@ -19,7 +20,9 @@ root.render(
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <RouterProvider router={router} />
+          <SnackbarProvider>
+            <RouterProvider router={router} />
+          </SnackbarProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </IntlProvider>
