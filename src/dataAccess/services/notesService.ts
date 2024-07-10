@@ -37,15 +37,23 @@ function create(input: NoteCreateInputSchema) {
 }
 
 function updateTitle(input: NoteUpdateTitleInputSchema) {
-  return axios.patch(`${baseUri}/notes/${input.id}/title`, input.title, {
-    headers: { "Content-Type": "application/json" },
-  });
+  return axios.patch(
+    `${baseUri}/notes/${input.id}/title`,
+    JSON.stringify(input.title),
+    {
+      headers: { "Content-Type": "application/json" },
+    }
+  );
 }
 
 function updateContent(input: NoteUpdateContentInputSchema) {
-  return axios.patch(`${baseUri}/notes/${input.id}/content`, input.content, {
-    headers: { "Content-Type": "application/json" },
-  });
+  return axios.patch(
+    `${baseUri}/notes/${input.id}/content`,
+    JSON.stringify(input.content),
+    {
+      headers: { "Content-Type": "application/json" },
+    }
+  );
 }
 
 function deleteMany(input: string[]) {

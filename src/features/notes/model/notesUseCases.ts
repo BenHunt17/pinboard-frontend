@@ -27,7 +27,9 @@ function useSearchNotes() {
 
   const notes = data?.pages.flatMap((x) => x.items);
   const canLoadMore =
-    !isFetching && data?.pages[data.pages.length - 1].nextCursor !== null;
+    !isFetching &&
+    data?.pages !== undefined &&
+    data?.pages[data.pages.length - 1].nextCursor !== null;
 
   const loading = status === "loading";
 

@@ -7,7 +7,7 @@ export default function useQueryNotes(input: NoteSearchInputSchema) {
   const handleDataAccessError = useHandleDataAccessError();
 
   const result = useInfiniteQuery({
-    queryKey: ["notes"],
+    queryKey: ["notes", input],
     queryFn: ({ pageParam }) => notesService.search(input, pageParam, 15),
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     onError: handleDataAccessError,
