@@ -19,46 +19,75 @@ export const notesService = {
 
 const baseUri = process.env.REACT_APP_API_BASE_URI || "";
 
-function search(input: NoteSearchInputSchema, cursor: string, limit: number) {
+function search(
+  accessToken: string,
+  input: NoteSearchInputSchema,
+  cursor: string,
+  limit: number
+) {
   return axios
-    .post(`${baseUri}/notes/search`, { ...input, cursor, limit })
+    .post(
+      `${baseUri}/notes/search`,
+      { ...input, cursor, limit },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
     .then<PaginatedNotesSchema>((result) => {
       paginatedNotesSchema.parse(result.data);
       return result.data;
     });
 }
 
-function create(input: NoteCreateInputSchema) {
+function create(accessToken: string, input: NoteCreateInputSchema) {
   return axios
     .post(`${baseUri}/notes`, input, {
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
     })
     .then((result) => noteSchema.parse(result.data));
 }
 
-function updateTitle(input: NoteUpdateTitleInputSchema) {
+function updateTitle(accessToken: string, input: NoteUpdateTitleInputSchema) {
   return axios.patch(
     `${baseUri}/notes/${input.id}/title`,
     JSON.stringify(input.title),
     {
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
     }
   );
 }
 
-function updateContent(input: NoteUpdateContentInputSchema) {
+function updateContent(
+  accessToken: string,
+  input: NoteUpdateContentInputSchema
+) {
   return axios.patch(
     `${baseUri}/notes/${input.id}/content`,
     JSON.stringify(input.content),
     {
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
     }
   );
 }
 
-function deleteMany(input: string[]) {
+function deleteMany(accessToken: string, input: string[]) {
   return axios.delete(`${baseUri}/notes`, {
     data: input,
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 }

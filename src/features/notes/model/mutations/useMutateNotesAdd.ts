@@ -5,7 +5,8 @@ import useHandleDataAccessError from "../../../../dataAccess/common/useHandleDat
 import { useIntl } from "react-intl";
 import { useSnackbar } from "../../../../SnackbarProvider";
 import { commonMessages } from "../../../../common/commonMessages";
-import { kill } from "process";
+import { NoteCreateInputSchema } from "../../../../dataAccess/schemas/input/noteCreateInputSchema";
+import useAccessToken from "../../../../common/hooks/useAccessToken";
 
 export default function useMutateNotesAdd() {
   const queryClient = useQueryClient();
@@ -13,8 +14,13 @@ export default function useMutateNotesAdd() {
   const { formatMessage: f } = useIntl();
   const { showSnackbar } = useSnackbar();
 
+  const getAccessToken = useAccessToken();
+
   const result = useMutation({
-    mutationFn: notesService.create,
+    mutationFn: async (input: NoteCreateInputSchema) => {
+      const accessToken = await getAccessToken();
+      return notesService.create(accessToken, input);
+    },
     onSuccess: (result) => {
       queryClient.setQueriesData<InfiniteData<PaginatedNotesSchema>>(
         ["notes"],

@@ -5,6 +5,7 @@ import useHandleDataAccessError from "../../../../dataAccess/common/useHandleDat
 import { useIntl } from "react-intl";
 import { useSnackbar } from "../../../../SnackbarProvider";
 import { commonMessages } from "../../../../common/commonMessages";
+import useAccessToken from "../../../../common/hooks/useAccessToken";
 
 export default function useMutateNotesDelete() {
   const queryClient = useQueryClient();
@@ -12,8 +13,13 @@ export default function useMutateNotesDelete() {
   const { formatMessage: f } = useIntl();
   const { showSnackbar } = useSnackbar();
 
+  const getAccessToken = useAccessToken();
+
   const result = useMutation({
-    mutationFn: notesService.deleteMany,
+    mutationFn: async (ids: string[]) => {
+      const accessToken = await getAccessToken();
+      return notesService.deleteMany(accessToken, ids);
+    },
     onSuccess: (_, variables) => {
       queryClient.setQueriesData<InfiniteData<PaginatedNotesSchema>>(
         ["notes"],

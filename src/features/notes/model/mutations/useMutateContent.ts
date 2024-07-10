@@ -5,6 +5,8 @@ import { useSnackbar } from "../../../../SnackbarProvider";
 import { commonMessages } from "../../../../common/commonMessages";
 import { useIntl } from "react-intl";
 import { PaginatedNotesSchema } from "../../../../dataAccess/schemas/output/paginatedNotesSchema";
+import useAccessToken from "../../../../common/hooks/useAccessToken";
+import { NoteUpdateContentInputSchema } from "../../../../dataAccess/schemas/input/noteUpdateContentInputSchema";
 
 export default function useMutateContent() {
   const queryClient = useQueryClient();
@@ -12,8 +14,13 @@ export default function useMutateContent() {
   const { formatMessage: f } = useIntl();
   const { showSnackbar } = useSnackbar();
 
+  const getAccessToken = useAccessToken();
+
   const result = useMutation({
-    mutationFn: notesService.updateContent,
+    mutationFn: async (input: NoteUpdateContentInputSchema) => {
+      const accessToken = await getAccessToken();
+      return notesService.updateContent(accessToken, input);
+    },
     onSuccess: (_, variables) => {
       queryClient.setQueriesData<InfiniteData<PaginatedNotesSchema>>(
         ["notes"],

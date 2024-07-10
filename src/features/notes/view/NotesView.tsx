@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNotesViewContext } from "./NotesViewContext";
 import { commonMessages } from "../../../common/commonMessages";
 import { useIntl } from "react-intl";
+import LoadingPlaceholder from "../../../components/LoadingPlaceholder";
 
 export default function NotesView() {
   const { formatMessage: f } = useIntl();
@@ -12,9 +13,8 @@ export default function NotesView() {
   const [editMode, setEditMode] = useState(false);
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
 
-  const { notes, onDeleteNotes, canLoadMore, loadMore } = useNotesViewContext();
-
-  //TODO - display something else if loading or no notes found
+  const { notes, onDeleteNotes, canLoadMore, loadMore, notesLoading } =
+    useNotesViewContext();
 
   return (
     <Stack gap={2} alignItems="center">
@@ -25,19 +25,23 @@ export default function NotesView() {
         selectedNoteIds={selectedNoteIds}
         setSelectedNoteIds={setSelectedNoteIds}
       />
-      <Grid container spacing={4}>
-        {notes?.map((x, index) => (
-          <Grid key={x.id} item xs={3}>
-            <Note
-              note={x}
-              editMode={editMode}
-              selectedNoteIds={selectedNoteIds}
-              setSelectedNoteIds={setSelectedNoteIds}
-              noteIndex={index}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      {notesLoading ? (
+        <LoadingPlaceholder />
+      ) : (
+        <Grid container spacing={4}>
+          {notes?.map((x, index) => (
+            <Grid key={x.id} item xs={3}>
+              <Note
+                note={x}
+                editMode={editMode}
+                selectedNoteIds={selectedNoteIds}
+                setSelectedNoteIds={setSelectedNoteIds}
+                noteIndex={index}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      )}
       {canLoadMore && (
         <div>
           <Button onClick={loadMore} variant="contained">
