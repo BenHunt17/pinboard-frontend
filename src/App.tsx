@@ -11,6 +11,9 @@ export default function App() {
   if (!isAuthenticated) {
     navigate("/login");
   }
+  if (isAuthenticated) {
+    navigate("/notes");
+  }
 
   if (isLoading) {
     return <LoadingPlaceholder />;
@@ -18,7 +21,7 @@ export default function App() {
 
   return (
     <>
-      <Header />
+      <Header isLandingPage={!isAuthenticated} />
       <Box padding={2}>
         <Outlet />
       </Box>
