@@ -25,7 +25,9 @@ root.render(
           authorizationParams={{
             redirect_uri: process.env.REACT_APP_REDIRECT_URI,
             audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-            scope: "read:current_user update:current_user_metadata",
+            scope:
+              "openid profile read:current_user update:current_user_metadata",
+            prompt: "login",
           }}
         >
           <ThemeProvider theme={theme}>

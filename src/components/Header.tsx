@@ -1,6 +1,7 @@
 import { AppBar, Button, Stack, Toolbar, Typography } from "@mui/material";
 import { defineMessages, useIntl } from "react-intl";
 import { NavLink } from "react-router-dom";
+import ProfileMenu from "./profileMenu/ProfileMenu";
 
 interface HeaderProps {
   isLandingPage?: boolean;
@@ -16,7 +17,7 @@ export default function Header({ isLandingPage }: HeaderProps) {
           Pinboard
         </Typography>
         {isLandingPage !== true && (
-          <Stack direction="row" gap={1}>
+          <Stack direction="row" alignItems="center" gap={1}>
             {navigationItems.map((x) => (
               <NavLink
                 key={x.path}
@@ -30,6 +31,7 @@ export default function Header({ isLandingPage }: HeaderProps) {
                 </Button>
               </NavLink>
             ))}
+            <ProfileMenu />
           </Stack>
         )}
       </Toolbar>

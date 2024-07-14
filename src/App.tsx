@@ -3,17 +3,20 @@ import Header from "./components/Header";
 import { Box } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoadingPlaceholder from "./components/LoadingPlaceholder";
+import { useEffect } from "react";
 
 export default function App() {
   const navigate = useNavigate();
   const { isAuthenticated, isLoading } = useAuth0();
 
-  if (!isAuthenticated) {
-    navigate("/login");
-  }
-  if (isAuthenticated) {
-    navigate("/notes");
-  }
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+    if (isAuthenticated) {
+      navigate("/notes");
+    }
+  }, [isAuthenticated, navigate]);
 
   if (isLoading) {
     return <LoadingPlaceholder />;

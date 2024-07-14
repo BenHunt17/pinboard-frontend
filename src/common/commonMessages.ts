@@ -20,6 +20,14 @@ const buttons = defineMessages({
     id: "common.buttons.load-more",
     defaultMessage: "Load more",
   },
+  yes: {
+    id: "common.buttons.yes",
+    defaultMessage: "Yes",
+  },
+  no: {
+    id: "common.buttons.no",
+    defaultMessage: "No",
+  },
 });
 
 const toasts = defineMessages({
