@@ -30,7 +30,6 @@ function search(
       `${baseUri}/notes/search`,
       { ...input, cursor, limit },
       {
-        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
