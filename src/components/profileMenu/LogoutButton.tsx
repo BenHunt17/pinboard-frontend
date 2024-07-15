@@ -7,7 +7,12 @@ export default function LogoutButton() {
   const { logout } = useAuth0();
 
   return (
-    <Button onClick={() => logout()} sx={{ textTransform: "none" }}>
+    <Button
+      onClick={() =>
+        logout({ logoutParams: { returnTo: window.location.origin } })
+      }
+      sx={{ textTransform: "none" }}
+    >
       {f(messages.logout)}
     </Button>
   );

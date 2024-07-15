@@ -21,7 +21,7 @@ export default function useDeleteUser(onComplete: () => void) {
     },
     onSuccess: () => {
       showSnackbar(f(messages.successSnackbar), "success");
-      logout();
+      logout({ logoutParams: { returnTo: window.location.origin } });
       onComplete();
     },
     onError: handleDataAccessError,
