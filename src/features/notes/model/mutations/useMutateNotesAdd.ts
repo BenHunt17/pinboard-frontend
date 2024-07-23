@@ -38,9 +38,9 @@ export default function useMutateNotesAdd() {
             }) ?? [],
         })
       );
+      showSnackbar(f(commonMessages.toasts.added), "success");
     },
     onError: handleDataAccessError,
-    onMutate: () => showSnackbar(f(commonMessages.toasts.added), "success"),
   });
 
   return result;

@@ -35,9 +35,9 @@ export default function useMutateTitle() {
             })) ?? [],
         })
       );
+      showSnackbar(f(commonMessages.toasts.updated), "success");
     },
     onError: handleDataAccessError,
-    onMutate: () => showSnackbar(f(commonMessages.toasts.updated), "success"),
   });
 
   return result;

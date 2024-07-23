@@ -32,9 +32,9 @@ export default function useMutateNotesDelete() {
             })) ?? [],
         })
       );
+      showSnackbar(f(commonMessages.toasts.deleted), "success");
     },
     onError: handleDataAccessError,
-    onMutate: () => showSnackbar(f(commonMessages.toasts.deleted), "success"),
   });
 
   return result;
